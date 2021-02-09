@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 const db = require("./database");
 
 
-const Level = db.define('Notes', {
+const Note = db.define('note', {
     NoteID: {
         type: Sequelize.TINYINT,
         primaryKey: true
@@ -16,8 +16,12 @@ const Level = db.define('Notes', {
     isActual: {
         type: Sequelize.BOOLEAN
     },
+    isDeleted: {
+        type: Sequelize.BOOLEAN
+    },
+
 },{
 
 })
 
-module.exports = Level;
+module.exports = Note;

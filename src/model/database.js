@@ -6,6 +6,10 @@ module.exports = new Sequelize(
     'root', {
         dialect: 'mysql',
         host: 'localhost',
+        dialectOptions: {
+            useUTC: false, // for reading from database
+        },
+        timezone: '+01:00', // for writing to database
     },
 
 );
