@@ -1,20 +1,12 @@
 const Sequelize = require("sequelize");
 const db = require("./database");
-
+const Noteversion = require("./Noteversion")
 
 const Note = db.define('note', {
     NoteID: {
         type: Sequelize.TINYINT,
-        primaryKey: true
-    },
-    title:{
-        type: Sequelize.STRING
-    },
-    content: {
-        type: Sequelize.STRING
-    },
-    isActual: {
-        type: Sequelize.BOOLEAN
+        primaryKey: true,
+        autoIncrement: true
     },
     isDeleted: {
         type: Sequelize.BOOLEAN
@@ -23,5 +15,5 @@ const Note = db.define('note', {
 },{
 
 })
-
+Note.hasMany(Noteversion, {foreignKey: 'NoteID'});
 module.exports = Note;

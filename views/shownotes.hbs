@@ -47,14 +47,14 @@
     <table style="width:100%">
         <tr>
             <th>Title</th>
-            <th>Content</th>
+            <th>Created</th>
             <th>Last Modified</th>
         </tr>
         {{#each notes}}
         <tr>
-                <td> {{this.title}}</td>
-                <td> {{this.content}}</td>
-                <td> {{this.updatedAt}}</td>
+                <td> {{this.[noteversions].[1]}}</td>
+                <td> {{this.createdAt}}</td>
+                <td> {{this.noteversions.updatedAt}}</td>
         </tr>
         {{/each}}
     </table>
