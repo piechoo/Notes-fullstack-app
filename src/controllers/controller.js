@@ -20,3 +20,20 @@ exports.addingNote = async (request, response) => {
         response.end();
     }
 }
+
+exports.renderAddNote = (request, response) => {
+
+    let notelist;
+    Note.findAll({
+        where: {
+            isActual: true
+        },
+    })
+        .then( note=>{
+            notelist=note;
+            response.render("shownotes",{
+                notes: notelist
+            })
+        })
+        .catch(err=>console.log(err));
+}
