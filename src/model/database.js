@@ -7,8 +7,13 @@ module.exports = new Sequelize(
         dialect: 'mysql',
         host: 'localhost',
         dialectOptions: {
+                useUTC:false,
+                dateStrings: true,
+                typeCast: true,
+                timezone: "+05:30"
         },
-        timezone: '+01:00', // for writing to database
+            timezone: '+01:00', // for writing to database
+
     },
 
 );

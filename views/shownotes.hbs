@@ -52,9 +52,13 @@
         </tr>
         {{#each notes}}
         <tr>
-                <td> {{this.[noteversions].[1]}}</td>
+            {{#each this.noteversions}}
+                <td> {{title}}</td>
+            {{/each}}
                 <td> {{this.createdAt}}</td>
-                <td> {{this.noteversions.updatedAt}}</td>
+            {{#each this.noteversions}}
+                <td> {{updatedAt}}</td>
+            {{/each}}
         </tr>
         {{/each}}
     </table>
