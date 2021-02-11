@@ -4,7 +4,7 @@
   "description": "Polsource fullstack assignment",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "start": "nodemon src/index.js"
   },
   "repository": {
@@ -23,6 +23,10 @@
     "hbs": "^4.1.1",
     "mysql2": "^2.2.5",
     "nodemon": "^2.0.7",
-    "sequelize": "^6.5.0"
+    "sequelize": "^6.5.0",
+    "mocha": "^8.2.1",
+    "should": "^13.2.3",
+    "supertest": "^6.1.3"
   }
+
 }

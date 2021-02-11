@@ -18,14 +18,16 @@ exports.addNote = async (request, response) => {
                     NoteID: result.NoteID,
                     title:title,
                     content:content,
-                })
+                }).then( note => {response.send(note)})
                     .catch(err => console.log(err))
             })
-            .then( response.redirect("/"))
-            .catch(err => console.log(err))
+
+
     }
     else {
-        response.send('Please enter Title and Content!');
+        return response.status(400).send({
+            message: "Empty Title or Content "
+        });
         response.end();
     }
 }
@@ -49,11 +51,17 @@ exports.getNotes = (request, response) => {
                 }]
         })
             .then(note => {
-                if(note.length!=0)
-                    response.send(JSON.stringify(note))
-                else
-                    response.send("Cannot find note with ID: "+request.query.id)
-                response.end();
+                if(note.length!=0) {
+                    response.header("Access-Control-Allow-Origin", "*");
+                    response.json(note);
+                    response.end()
+
+                }
+                else {
+                    return response.status(404).send({
+                        message: "Note not found with id " + request.query.id
+                    });
+                }
             })
 
     }
@@ -76,7 +84,8 @@ exports.getNotes = (request, response) => {
         })
             .then(note => {
                 notelist = note;
-                response.send(JSON.stringify(notelist))
+                response.header("Access-Control-Allow-Origin", "*");
+                response.json(notelist)
                 response.end();
             })
             .catch(err => console.log(err));
@@ -103,11 +112,17 @@ exports.noteContent = (request, response) => {
                 }]
         })
             .then(note => {
-                if(note.length!=0)
+                if (note.length != 0){
+                    response.header("Access-Control-Allow-Origin", "*");
                     response.send(JSON.stringify(note))
-                else
-                    response.send("Cannot find note with ID: "+request.query.id)
-                response.end();
+                    response.end();
+                }
+                else{
+                    return response.status(404).send({
+                        message: "Note not found with id " + request.query.id
+                    });
+                }
+
             })
     }
     else {
@@ -130,16 +145,19 @@ exports.history = (request, response) => {
                     order: [
                         ['updatedAt', 'DESC'],
                     ],
-                    attributes: ['title', 'updatedAt'],
-
+                    attributes: ['version','title','content','updatedAt'],
                 }]
         })
             .then(note => {
-                if(note.length!=0)
+                if(note.length!=0) {
                     response.send(JSON.stringify(note))
-                else
-                    response.send("Cannot find note with ID: "+request.query.id)
-                response.end();
+                    response.end
+                }
+                else{
+                    return response.status(404).send({
+                        message: "Note not found with id " + request.query.id
+                    });
+                }
             })
 
     }
@@ -175,11 +193,16 @@ exports.deleteNote = (request, response) => {
         }, {
             where: {NoteID: request.query.id},
         }).then(note => {
-                if(note[1]!=0)
+                if(note[1]!=0) {
                     response.send(JSON.stringify(note))
-                else
-                    response.send("Cannot find note with ID: "+request.query.id)
-                response.end();
+                    response.end
+                }
+                else{
+                    return response.status(404).send({
+                        message: "Note not found with id " + request.query.id
+                    });
+                }
+
             })
     }
     else {
@@ -189,9 +212,8 @@ exports.deleteNote = (request, response) => {
 }
 
 exports.updateNote = async  (request, response) => {
-
     if(!request.body.content) {
-        return response.send("Note content can not be empty");
+        return response.status(400).send("Empty content");
     }
     let prevTitle = await Noteversion.findAll({
         where: {NoteID: request.query.id},
@@ -210,11 +232,15 @@ exports.updateNote = async  (request, response) => {
             content: request.body.content,
         })
             .then(note => {
-                if (prevTitle)
+                if (prevTitle){
                     response.send(JSON.stringify(note))
-                else
-                    response.send("Cannot find note with ID: " + request.query.id)
-                response.end();
+                    response.end
+                }
+                else{
+                    return response.status(404).send({
+                        message: "Note not found with id " + request.query.id
+                    });
+                }
             })
     }
     else {
@@ -225,11 +251,15 @@ exports.updateNote = async  (request, response) => {
             content: request.body.content,
         })
             .then(note => {
-                if (prevTitle)
+                if (prevTitle) {
                     response.send(JSON.stringify(note))
-                else
-                    response.send("Cannot find note with ID: " + request.query.id)
-                response.end();
+                    response.end
+                }
+                else{
+                    return response.status(404).send({
+                        message: "Note not found with id " + request.query.id
+                    });
+                }
             })
     }
 
