@@ -47,26 +47,26 @@ And in another terminal:
 ```
 mocha
 ```
-##Example curl commands
+## Example curl commands
 
-###Create (Post)
+### Create (Post)
 Creating new note with data passed in title and example  
 `curl -d "title=example1&content=example2" http://localhost:4006/notes`  
 API returns json with created object
 ***
-###Read (Get)
+### Read (Get)
 Showing all created and not deleted notes  
 `curl http://localhost:4006/notes`  
 API returns all actual notes in json format
 ***
-###Update (Put)
+### Update (Put)
 Updating note with given id number with data passed in title and example  
 `curl -X PUT -d "title=updated&content=content" localhost:4006/notes?id=143`  
 Other version - updating only content of note with given id  
 `curl -X PUT -d "content=content" localhost:4006/notes?id=143`  
 API returns json with updated object
 ***
-###Delete (Delete)
+### Delete (Delete)
 Deleting note with given id  
 `curl -X DELETE localhost:4006/notes?id=143`  
 API returns [1] if note was deleted succesfully
