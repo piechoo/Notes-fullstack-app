@@ -16,7 +16,7 @@ USE notes;
 source notes.sql
 ```
 ## Build and run project
-# Build
+### Build
 To build project following commands should be run from project directory:
 ```
 npm install body-parser cross-env express mocha mysql2 nodemon sequelize should sqlite3 supertest
@@ -27,7 +27,7 @@ npm install react react-dom react-router-dom react-scripts web-vitals
 ```
 In order to work properly, `config.js` file in `src/model` should be edited with correct username and password of MySQL user  
 ***
-# Run
+### Run
 To run this project following commands should be run from project directory:
 ```
 npm start
@@ -40,7 +40,7 @@ npm start
 ```
 Now API is working on `localhost:4006` and UI is working on `localhost:3000`
 ***
-# Run tests
+### Run tests
 To run tests following command should be run from project directory:
 ```
 npm test
