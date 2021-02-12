@@ -2,14 +2,16 @@ const Note = require("../model/Note")
 const Noteversion = require("../model/Noteversion")
 
 
-exports.renderAddNote = (req, res) => {
-    res.render("addnote")
-}
 
 exports.addNote = async (request, response) => {
     let title = request.body.title;
     let content = request.body.content;
     if (title && content) {
+        if(title.length>255 || content.length>5000){
+            return response.status(400).send({
+                message: "Title or Content too long"
+            });
+        }
         Note.create({
         })
             .then( result => {
@@ -28,7 +30,6 @@ exports.addNote = async (request, response) => {
         return response.status(400).send({
             message: "Empty Title or Content "
         });
-        response.end();
     }
 }
 
@@ -45,7 +46,7 @@ exports.getNotes = (request, response) => {
                     model: Noteversion,
                     limit: 1,
                     order: [
-                        ['updatedAt', 'DESC'],
+                        ['version', 'DESC'],
                     ],
                     attributes: ['title', 'updatedAt'],
                 }]
@@ -55,7 +56,6 @@ exports.getNotes = (request, response) => {
                     response.header("Access-Control-Allow-Origin", "*");
                     response.json(note);
                     response.end()
-
                 }
                 else {
                     return response.status(404).send({
@@ -77,7 +77,7 @@ exports.getNotes = (request, response) => {
                     model: Noteversion,
                     limit: 1,
                     order: [
-                        ['updatedAt', 'DESC'],
+                        ['version', 'DESC'],
                     ],
                     attributes: ['title', 'updatedAt'],
                 }]
@@ -106,7 +106,7 @@ exports.noteContent = (request, response) => {
                     model: Noteversion,
                     limit: 1,
                     order: [
-                        ['updatedAt', 'DESC'],
+                        ['version', 'DESC'],
                     ],
                     attributes: ['title','content','updatedAt'],
                 }]
@@ -114,7 +114,7 @@ exports.noteContent = (request, response) => {
             .then(note => {
                 if (note.length != 0){
                     response.header("Access-Control-Allow-Origin", "*");
-                    response.send(JSON.stringify(note))
+                    response.json(note)
                     response.end();
                 }
                 else{
@@ -143,14 +143,14 @@ exports.history = (request, response) => {
                 {
                     model: Noteversion,
                     order: [
-                        ['updatedAt', 'DESC'],
+                        ['version', 'DESC'],
                     ],
                     attributes: ['version','title','content','updatedAt'],
                 }]
         })
             .then(note => {
                 if(note.length!=0) {
-                    response.send(JSON.stringify(note))
+                    response.json(note);
                     response.end
                 }
                 else{
@@ -171,14 +171,14 @@ exports.history = (request, response) => {
                 {
                     model: Noteversion,
                     order: [
-                        ['updatedAt', 'DESC'],
+                        ['version', 'DESC'],
                     ],
                     attributes: ['title', 'updatedAt'],
                 }]
         })
             .then(note => {
                 notelist = note;
-                response.send(JSON.stringify(notelist))
+                response.json(note);
                 response.end();
             })
             .catch(err => console.log(err));
@@ -215,11 +215,16 @@ exports.updateNote = async  (request, response) => {
     if(!request.body.content) {
         return response.status(400).send("Empty content");
     }
+    if(request.body.content.length>5000){
+        return response.status(400).send({
+            message: "Content too long"
+        });
+    }
     let prevTitle = await Noteversion.findAll({
         where: {NoteID: request.query.id},
         attributes: ['version','title'],
         order: [
-            ['updatedAt', 'DESC'],
+            ['version', 'DESC'],
         ],
         limit: 1,
     })
@@ -233,7 +238,7 @@ exports.updateNote = async  (request, response) => {
         })
             .then(note => {
                 if (prevTitle){
-                    response.send(JSON.stringify(note))
+                    response.json(note)
                     response.end
                 }
                 else{
@@ -244,6 +249,11 @@ exports.updateNote = async  (request, response) => {
             })
     }
     else {
+        if(request.body.title.length>255){
+            return response.status(400).send({
+                message: "Title too long"
+            });
+        }
         Noteversion.create({
             version: prevTitle[0].version+1,
             NoteID: request.query.id,
@@ -252,7 +262,7 @@ exports.updateNote = async  (request, response) => {
         })
             .then(note => {
                 if (prevTitle) {
-                    response.send(JSON.stringify(note))
+                    response.json(note)
                     response.end
                 }
                 else{
@@ -262,5 +272,4 @@ exports.updateNote = async  (request, response) => {
                 }
             })
     }
-
 }

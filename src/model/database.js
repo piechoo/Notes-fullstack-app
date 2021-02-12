@@ -1,19 +1,16 @@
 const Sequelize = require('sequelize')
+const config = require('./config')
 
 module.exports = new Sequelize(
-    'notes',
-    'root',
-    'root', {
-        dialect: 'mysql',
-        host: 'localhost',
-        dialectOptions: {
-                useUTC:false,
-                dateStrings: true,
-                typeCast: true,
-                timezone: "+05:30"
-        },
-            timezone: '+01:00', // for writing to database
-
+    config.database.name,
+    config.database.user,
+    config.database.password,
+    {
+        dialect: config.database.dialect,
+        host: config.database.host,
+        dialectOptions: config.database.dialectOptions,
+            timezone: config.database.timezone, // for reading from
+            storage: './database/notes.db'
     },
 
 );

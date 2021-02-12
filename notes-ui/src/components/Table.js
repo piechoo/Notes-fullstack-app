@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './Table.css';
-import Content from "./Content";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class Table extends Component {
     constructor(props) {
@@ -21,7 +20,7 @@ class Table extends Component {
 
     componentDidMount() {
         this.setState({ isLoading: true })
-        let api_url = 'http://localhost:3000/notes';
+        let api_url = 'http://localhost:4006/notes';
         fetch(api_url)
             .then(res => {
                 if(res.status >= 400) {
@@ -47,7 +46,7 @@ class Table extends Component {
     onSort(event, sortKey){
         const notes = this.state.notes;
         if(sortKey == 'title'){
-            if(this.state.sortConfig.key==sortKey && this.state.sortConfig.direction=="ascending"){
+            if(this.state.sortConfig.key == sortKey && this.state.sortConfig.direction == "ascending"){
                 notes.sort((a, b) => b['noteversions'][0].title.toString().localeCompare(a.noteversions[0].title.toString()))
                 this.setState({sortConfig: {key: sortKey, direction: "descending"}})
             }
@@ -58,7 +57,7 @@ class Table extends Component {
         }
 
         else if( sortKey === 'modified At'){
-            if(this.state.sortConfig.key==sortKey && this.state.sortConfig.direction=="ascending") {
+            if(this.state.sortConfig.key == sortKey && this.state.sortConfig.direction == "ascending") {
                 notes.sort((a,b) => b.noteversions[0].updatedAt.toString().localeCompare(a.noteversions[0].updatedAt.toString()))
                 this.setState({sortConfig: {key: sortKey, direction: "descending"}})
             }
@@ -69,7 +68,7 @@ class Table extends Component {
         }
 
         else if( sortKey === 'created At') {
-            if(this.state.sortConfig.key==sortKey && this.state.sortConfig.direction=="ascending") {
+            if(this.state.sortConfig.key == sortKey && this.state.sortConfig.direction == "ascending") {
                 notes.sort((a, b) => b.createdAt.toString().localeCompare(a.createdAt.toString()))
                 this.setState({sortConfig: {key: sortKey, direction: "descending"}})
             }
@@ -79,12 +78,12 @@ class Table extends Component {
             }
         }
         else {
-            if(this.state.sortConfig.key==sortKey && this.state.sortConfig.direction=="ascending") {
-                notes.sort((a, b) => b.NoteID.toString().localeCompare(a.NoteID.toString()))
+            if(this.state.sortConfig.key == sortKey && this.state.sortConfig.direction == "ascending") {
+                notes.sort((a, b) => b.NoteID.toString().localeCompare(a.NoteID.toString(), undefined, {numeric: true}))
                 this.setState({sortConfig: {key: sortKey, direction: "descending"}})
             }
             else {
-                notes.sort((a, b) => a.NoteID.toString().localeCompare(b.NoteID.toString()))
+                notes.sort((a, b) => a.NoteID.toString().localeCompare(b.NoteID.toString(), undefined, {numeric: true}))
                 this.setState({sortConfig: {key: sortKey, direction: "ascending"}})
             }
         }
@@ -94,29 +93,13 @@ class Table extends Component {
 
     renderTableData() {
         return this.state.notes.map((note, index) => {
-            const { NoteID, isDeleted, createdAt, noteversions } = note //destructuring
+            const { NoteID, isDeleted, createdAt, noteversions } = note
             let title = noteversions[0].title
             let update = noteversions[0].updatedAt
             return (
                 <tr key={NoteID}>
                     <td>{NoteID}</td>
-                    <td><Link to={"/content/"+NoteID}>{title}</Link></td>
-                    <td>{createdAt}</td>
-                    <td>{update}</td>
-                </tr>
-            )
-        })
-    }
-
-    renderNoteContent() {
-        return this.state.notes.map((note, index) => {
-            const { NoteID, isDeleted, createdAt, noteversions } = note //destructuring
-            let title = noteversions[0].title
-            let update = noteversions[0].updatedAt
-            return (
-                <tr key={NoteID}>
-                    <td>{NoteID}</td>
-                    <td><a href={"http://localhost:3000/notecontent?id="+NoteID}>{title}</a></td>
+                    <td><Link to={"/content/"+NoteID} class='link'>{title}</Link></td>
                     <td>{createdAt}</td>
                     <td>{update}</td>
                 </tr>
@@ -129,15 +112,14 @@ class Table extends Component {
     renderTableHeader() {
         let heder = ['ID', 'title', 'created At', 'modified At']
         return heder.map(head => {
-            return <th key={head} onClick={e => this.onSort(e, head)}>{head.toUpperCase()}</th>
+            return <th className='unselectable' key={head} onClick={e => this.onSort(e, head)}>{head.toUpperCase()}</th>
         })
     }
 
 
     render() {
-
         return (
-            <div style={{textAlign:"center"}}>
+            <div class='return'>
                 <h1>List of Notes</h1>
                     <table id='notes'>
                         <tbody>
@@ -146,7 +128,6 @@ class Table extends Component {
                         </tbody>
                     </table>
                 </div>
-
         )
     }
 }

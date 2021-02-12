@@ -10,6 +10,7 @@ const Note = db.define('note', {
     },
     isDeleted: {
         type: Sequelize.BOOLEAN
+
     },
 
 },{

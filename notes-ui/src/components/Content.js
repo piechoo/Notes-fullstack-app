@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import './Table.css';
-import Table from "./Table";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class Content extends Component {
     constructor(props) {
@@ -16,7 +14,7 @@ class Content extends Component {
 
     componentDidMount() {
         this.setState({ isLoading: true })
-        let api_url = 'http://localhost:3000/notecontent?id='+this.props.match.params.id;
+        let api_url = 'http://localhost:4006/notecontent?id='+this.props.match.params.id;
         fetch(api_url)
             .then(res => {
                 if(res.status >= 400) {
@@ -44,7 +42,7 @@ class Content extends Component {
 
     renderNoteContent() {
         return this.state.note.map((note, index) => {
-            const { NoteID, isDeleted, createdAt, noteversions } = note //destructuring
+            const { NoteID, createdAt, noteversions } = note //destructuring
             let title = noteversions[0].title
             let update = noteversions[0].updatedAt
             let content = noteversions[0].content
@@ -71,19 +69,13 @@ class Content extends Component {
 
     }
 
-
-
-
-
-
     render() {
 
         return (
-                <div>
-                    <Link to={"/"}>Back to list</Link>
+                <div class='return'>
+                    <Link class='link' to={"/"}><h1> Back to list</h1></Link>
                     {this.renderNoteContent()}
                 </div>
-
         )
     }
 }

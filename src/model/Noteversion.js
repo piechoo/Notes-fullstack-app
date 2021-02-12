@@ -1,7 +1,5 @@
 const Sequelize = require("sequelize");
 const db = require("./database");
-const Note = require("./Note")
-
 
 const Noteversion = db.define('noteversion', {
     version:{
@@ -19,10 +17,7 @@ const Noteversion = db.define('noteversion', {
     content: {
         type: Sequelize.STRING
     },
-
-
 },{
-
 })
 
 module.exports = Noteversion;
