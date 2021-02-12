@@ -4,7 +4,6 @@ module.exports = {
         user: 'root',
         password: 'root',
         host: 'localhost',
-        // Use "sqlite" for "test", the connection settings above are ignored
         dialect: process.env.APP_ENV === 'test' ? 'sqlite' : 'mysql',
         dialectOptions : process.env.APP_ENV === 'test' ? {} : {
             useUTC:false,
