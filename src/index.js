@@ -3,11 +3,7 @@ const bodyParser = require('body-parser')
 const router = require('./router')
 
 const app = express();
-const db = require("./model/database")
 
-db.authenticate()
-    .then(()=>console.log('Database connected'))
-    .catch(err=> console.log('Error: '+err))
 
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());

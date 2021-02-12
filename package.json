@@ -4,7 +4,6 @@
   "description": "Polsource fullstack assignment",
   "main": "src/index.js",
   "scripts": {
-    "runtest": "cross-env APP_ENV=test mocha",
     "test": "cross-env APP_ENV=test nodemon src/index.js",
     "start": "nodemon src/index.js"
   },
