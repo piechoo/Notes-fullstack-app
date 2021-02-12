@@ -29,7 +29,9 @@ In order to work properly, `config.js` file in `src/model` should be edited with
 To run this project following commands should be run from project directory:
 ```
 npm start
-
+```
+And in another terminal
+```
 cd notes-ui
 
 npm start
@@ -40,7 +42,7 @@ To run tests following command should be run from project directory:
 ```
 npm test
 ```
-and in another terminal:
+And in another terminal:
 
 ```
 mocha
