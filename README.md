@@ -63,7 +63,7 @@ Showing all created and not deleted notes
 API returns all actual notes in json format
 ***
 ### Update (Put)
-Updating note with given id number with data passed in title and example  
+Updating note with given id number with data passed in title and content  
 `curl -X PUT -d "title=updated&content=content" localhost:4006/notes?id=143`  
 Other version - updating only content of note with given id  
 `curl -X PUT -d "content=content" localhost:4006/notes?id=143`  
