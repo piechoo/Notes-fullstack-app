@@ -11,11 +11,12 @@ A simple Notes list app made using Node.js, Express, React and MySQL (and Sqlite
 To setup MySQL databse we need to run following commands from `database` directory ( `root` should be replaced with MySQL server username )
 ```
 mysql -u root -p
-CREATE TABLE notes;
+CREATE DATABASE notes;
 USE notes;
-source notes.sql
+SOURCE backup.sql
 ```
 ## Build and run project
+### Build
 To build project following commands should be run from project directory:
 ```
 npm install body-parser cross-env express mocha mysql2 nodemon sequelize should sqlite3 supertest
@@ -26,45 +27,59 @@ npm install react react-dom react-router-dom react-scripts web-vitals
 ```
 In order to work properly, `config.js` file in `src/model` should be edited with correct username and password of MySQL user  
 ***
+### Run
 To run this project following commands should be run from project directory:
 ```
 npm start
-
+```
+And in another terminal
+```
 cd notes-ui
 
 npm start
 ```
 Now API is working on `localhost:4006` and UI is working on `localhost:3000`
 ***
+### Run tests
 To run tests following command should be run from project directory:
 ```
 npm test
 ```
-and in another terminal:
+And in another terminal:
 
 ```
 mocha
 ```
-##Example curl commands
+## Example curl commands
 
-###Create (Post)
-Creating new note with data passed in title and example  
-`curl -d "title=example1&content=example2" http://localhost:4006/notes`  
+### Create (Post)
+Creating new note with data passed in title and content  
+```
+curl -d "title=example1&content=example2" http://localhost:4006/notes
+```  
 API returns json with created object
 ***
-###Read (Get)
+### Read (Get)
 Showing all created and not deleted notes  
-`curl http://localhost:4006/notes`  
+```
+curl http://localhost:4006/notes
+```  
 API returns all actual notes in json format
 ***
-###Update (Put)
-Updating note with given id number with data passed in title and example  
-`curl -X PUT -d "title=updated&content=content" localhost:4006/notes?id=143`  
+### Update (Put)
+Updating note with given id number with data passed in title and content  
+```
+curl -X PUT -d "title=updated&content=content" localhost:4006/notes?id=143
+```  
 Other version - updating only content of note with given id  
-`curl -X PUT -d "content=content" localhost:4006/notes?id=143`  
+```
+curl -X PUT -d "content=content" localhost:4006/notes?id=143
+```  
 API returns json with updated object
 ***
-###Delete (Delete)
+### Delete (Delete)
 Deleting note with given id  
-`curl -X DELETE localhost:4006/notes?id=143`  
+```
+curl -X DELETE localhost:4006/notes?id=143
+```
 API returns [1] if note was deleted succesfully
