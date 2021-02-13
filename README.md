@@ -69,17 +69,34 @@ API returns all actual notes in json format
 ### Update (Put)
 Updating note with given id number with data passed in title and content  
 ```
-curl -X PUT -d "title=updated&content=content" localhost:4006/notes?id=143
+curl -X PUT -d "title=updated&content=content" localhost:4006/notes?id=28
 ```  
 Other version - updating only content of note with given id  
 ```
-curl -X PUT -d "content=content" localhost:4006/notes?id=143
+curl -X PUT -d "content=content" localhost:4006/notes?id=28
 ```  
 API returns json with updated object
 ***
 ### Delete (Delete)
 Deleting note with given id  
 ```
-curl -X DELETE localhost:4006/notes?id=143
+curl -X DELETE localhost:4006/notes?id=28
 ```
 API returns [1] if note was deleted succesfully
+***
+### History (Get)
+Showing history of all notes
+```
+curl http://localhost:4006/history
+```
+Other version - showing only history of note with given id  
+```
+curl http://localhost:4006/history?id=28
+```
+API returns json with chosen note or all notes
+### Content (Get)
+Showing content of note with given id  
+```
+curl http://localhost:4006/notecontent?id=28
+```
+API returns json with chosen note content
