@@ -13,7 +13,7 @@ To setup MySQL databse we need to run following commands from `database` directo
 mysql -u root -p
 CREATE DATABASE notes;
 USE notes;
-SOURCE backup.sql
+SOURCE notes.sql
 ```
 ## Build and run project
 ### Build
