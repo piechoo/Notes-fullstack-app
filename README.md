@@ -94,6 +94,7 @@ Other version - showing only history of note with given id
 curl http://localhost:4006/history?id=28
 ```
 API returns json with chosen note or all notes
+***
 ### Content (Get)
 Showing content of note with given id  
 ```
