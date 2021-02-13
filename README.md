@@ -11,9 +11,9 @@ A simple Notes list app made using Node.js, Express, React and MySQL (and Sqlite
 To setup MySQL databse we need to run following commands from `database` directory ( `root` should be replaced with MySQL server username )
 ```
 mysql -u root -p
-CREATE TABLE notes;
+CREATE DATABASE notes;
 USE notes;
-source notes.sql
+SOURCE notes.sql
 ```
 ## Build and run project
 ### Build
